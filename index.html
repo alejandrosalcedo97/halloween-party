@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Halloween Party</title>
+<meta name="description" content="You're invited! Halloween Party · October 31st · 8:00 PM · North Van. RSVP inside.">
+<meta property="og:title" content="You're invited to a Halloween Party">
+<meta property="og:description" content="October 31st · 8:00 PM · North Van — costumes are a must! RSVP inside.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jolly+Lodger&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#ece1cd;--paper2:#ddcdb1;--ink:#141210;--muted:#4a4038;--line:rgba(20,18,16,.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--paper);color:var(--ink);font-family:'Josefin Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 40%,var(--paper) 55%,var(--paper2) 100%) fixed}
+body.locked{overflow:hidden}
+
+/* ---------- Intro (tap to open) ---------- */
+#intro{position:fixed;inset:0;z-index:50;display:grid;place-items:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#intro .half{position:absolute;left:0;right:0;height:50.5%;background:var(--ink);transition:transform 1.1s cubic-bezier(.75,0,.2,1)}
+#intro .top{top:0}#intro .bottom{bottom:0}
+#intro .seal{position:relative;z-index:2;text-align:center;color:var(--paper);transition:opacity .4s,transform .7s}
+#intro .seal .sk{width:104px;height:104px;margin:0 auto 22px;display:block;animation:pulse 1.8s ease-in-out infinite}
+#intro .seal p{font-size:13px;letter-spacing:4px;text-transform:uppercase;opacity:.85}
+#intro .seal p.big{font-family:'Jolly Lodger',Georgia,serif;font-size:40px;letter-spacing:1px;text-transform:none;opacity:1;margin-bottom:6px}
+#intro.open{pointer-events:none}
+#intro.open .top{transform:translateY(-101%)}
+#intro.open .bottom{transform:translateY(101%)}
+#intro.open .seal{opacity:0;transform:scale(1.5)}
+@keyframes pulse{0%,100%{transform:scale(1) rotate(-4deg)}50%{transform:scale(1.08) rotate(4deg)}}
+
+/* ---------- Card ---------- */
+.card{position:relative;max-width:540px;margin:0 auto;overflow:hidden}
+.sheet{position:relative;padding:118px 30px 40px;text-align:center}
+.txt{position:relative;z-index:2}
+.rv{opacity:0;transform:translateY(18px)}
+body.opened .rv{opacity:1;transform:none;transition:opacity .9s ease,transform .9s cubic-bezier(.2,.8,.2,1);transition-delay:calc(var(--d,0) * 110ms + .55s)}
+
+.kicker{font-size:15px;letter-spacing:3px;margin-bottom:10px}
+.title{font-family:'Jolly Lodger',Georgia,serif;font-weight:400;font-size:clamp(78px,23vw,132px);line-height:.8;letter-spacing:1px;animation:flick 7s infinite 3s}
+.title .w{display:block}
+.title .ch{display:inline-block;animation:wob 3.2s ease-in-out infinite;animation-delay:calc(var(--i) * -.21s)}
+@keyframes wob{0%,100%{transform:translateY(0) rotate(-2.5deg)}50%{transform:translateY(-5px) rotate(2.5deg)}}
+@keyframes flick{0%,90%,100%{opacity:1}91%{opacity:.25}92%{opacity:1}94%{opacity:.45}95.5%{opacity:1}}
+.date{font-size:clamp(26px,8vw,36px);letter-spacing:2px;margin-top:22px}
+.time{font-size:clamp(24px,7vw,32px);letter-spacing:2px;margin-top:4px}
+.addr{display:inline-flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--ink);text-decoration:none;font-size:18px;line-height:1.35;text-align:left;border-bottom:1.5px dashed transparent;transition:border-color .2s}
+.addr:hover,.addr:focus-visible{border-color:var(--ink)}
+.addr svg{flex:0 0 18px;margin-top:2px}
+.addr small{display:block;font-size:11px;letter-spacing:2px;color:var(--muted);margin-top:4px;text-transform:uppercase}
+
+.count{display:flex;justify-content:center;gap:8px;margin:24px 0 6px}
+.count div{min-width:60px;padding:10px 4px 8px;border:1.5px solid var(--ink);border-radius:12px;background:rgba(236,225,205,.6)}
+.count b{display:block;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
+.count span{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.count-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:26px 0 22px}
+.divider i{height:1.5px;width:70px;background:var(--ink)}
+.divider svg{width:104px;height:44px}
+.divider .b{animation:flap .35s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+.divider .b:nth-child(2){animation-delay:-.1s}.divider .b:nth-child(3){animation-delay:-.2s}.divider .b:nth-child(4){animation-delay:-.05s}
+
+.must{font-size:clamp(21px,6vw,27px);letter-spacing:3px;font-weight:600}
+.sub{font-size:13px;letter-spacing:3px;font-weight:700;margin-top:6px}
+.cheers{width:64px;height:52px;margin:20px auto 6px;display:block}
+.cheers .g1{transform-origin:21px 40px;animation:clinkL 2.6s ease-in-out infinite}
+.cheers .g2{transform-origin:43px 40px;animation:clinkR 2.6s ease-in-out infinite}
+.cheers .sp{opacity:0;animation:spark 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes clinkL{0%,30%,100%{transform:rotate(-22deg)}45%,55%{transform:rotate(-6deg)}}
+@keyframes clinkR{0%,30%,100%{transform:rotate(22deg)}45%,55%{transform:rotate(6deg)}}
+@keyframes spark{0%,44%{opacity:0;transform:scale(.4)}52%{opacity:1;transform:scale(1.1)}70%,100%{opacity:0;transform:scale(.6)}}
+.drink{font-size:clamp(15px,4.4vw,19px);letter-spacing:1.8px}
+.swoosh{width:110px;height:12px;display:block;margin:12px auto 0}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:28px}
+.btn{display:inline-flex;gap:8px;align-items:center;justify-content:center;padding:13px 20px;border:2px solid var(--ink);border-radius:999px;font:700 12.5px/1 'Josefin Sans',sans-serif;letter-spacing:2px;text-transform:uppercase;background:transparent;color:var(--ink);text-decoration:none;cursor:pointer;transition:transform .15s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:scale(.97)}
+.btn.solid{background:var(--ink);color:var(--paper)}
+.btn.big{width:100%;padding:17px;font-size:14px}
+.btn[disabled]{opacity:.6;pointer-events:none}
+
+/* ---------- Decorations ---------- */
+.deco{position:absolute;z-index:1;-webkit-tap-highlight-color:transparent}
+.skull{cursor:pointer}
+.skull .sk{display:block;width:100%;height:100%;transform:scale(0) rotate(-40deg)}
+body.opened .skull .sk{animation:pop .7s cubic-bezier(.3,1.6,.5,1) both,floaty 4.5s ease-in-out infinite;animation-delay:calc(var(--d,0) * 90ms + .3s),calc(var(--d,0) * 90ms + 1s)}
+@keyframes pop{from{transform:scale(0) rotate(-40deg)}to{transform:scale(1) rotate(var(--r,0deg))}}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-7px) rotate(calc(var(--r,0deg) + 6deg))}}
+.sk .jaw{transition:transform .1s}
+.skull.chatter .jaw,.done-skull.chatter .jaw{animation:chat .1s 8 alternate ease-in-out}
+@keyframes chat{to{transform:translateY(4px)}}
+
+.hand .hd{display:block;width:100%;height:auto;transform:translateX(-75%)}
+body.opened .hand .hd{animation:creep 1.6s cubic-bezier(.3,.9,.3,1) both,grab 3.8s ease-in-out infinite;animation-delay:calc(var(--d,0) * 150ms + .6s),calc(var(--d,0) * 150ms + 2.2s)}
+@keyframes creep{from{transform:translateX(-75%)}to{transform:translateX(0)}}
+@keyframes grab{0%,100%{transform:translateX(0) rotate(0)}50%{transform:translateX(-6%) rotate(-4deg)}}
+
+.star{width:18px;height:18px;opacity:0}
+body.opened .star{animation:twinkle 2.4s ease-in-out infinite;animation-delay:calc(var(--d,0) * -.37s)}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(45deg)}}
+
+/* flying bats layer */
+#sky{position:fixed;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+.fly{position:absolute;left:0;width:46px;height:23px}
+.fly svg{width:100%;height:100%;display:block}
+.fly .w{animation:flap .18s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:center}
+@keyframes flap{from{transform:scaleY(1)}to{transform:scaleY(.35)}}
+
+/* ---------- RSVP ---------- */
+.rsvp{position:relative;padding:30px 28px 150px;text-align:center}
+.rsvp h2{font-family:'Jolly Lodger',Georgia,serif;font-weight:400;font-size:76px;line-height:.9;letter-spacing:2px}
+.rsvp .lead{font-size:13px;letter-spacing:2.5px;text-transform:uppercase;margin:6px 0 26px}
+form{position:relative;z-index:2;text-align:left;max-width:380px;margin:0 auto}
+.fl{display:block;margin-bottom:22px}
+.fl>span{display:block;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;font-weight:700;margin-bottom:8px;color:var(--muted)}
+input[type=text],input[type=email],textarea{width:100%;background:transparent;border:0;border-bottom:2px solid var(--ink);padding:8px 2px;font:400 18px 'Josefin Sans',sans-serif;color:var(--ink);border-radius:0;outline:none;resize:none}
+input[type=text]::placeholder,input[type=email]::placeholder,textarea::placeholder{color:rgba(20,18,16,.4)}
+input[type=text]:focus,input[type=email]:focus,textarea:focus{border-bottom-style:dashed}
+.choice{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.choice label{position:relative;cursor:pointer}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice .opt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px 12px;border:2px solid var(--ink);border-radius:14px;font-weight:700;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;transition:background .2s,color .2s,transform .15s}
+.choice .opt svg{width:34px;height:34px}
+.choice input:checked+.opt{background:var(--ink);color:var(--paper)}
+.choice input:checked+.opt svg .f{fill:var(--paper)}.choice input:checked+.opt svg .h{fill:var(--ink)}
+.choice input:focus-visible+.opt{outline:2px dashed var(--ink);outline-offset:3px}
+.choice .opt:active{transform:scale(.97)}
+#ifyes{overflow:hidden;transition:max-height .45s ease,opacity .35s;max-height:0;opacity:0}
+#ifyes.show{max-height:260px;opacity:1}
+.stepper{display:flex;align-items:center;gap:18px}
+.stepper button{width:42px;height:42px;border-radius:50%;border:2px solid var(--ink);background:transparent;font:700 22px/1 'Josefin Sans';color:var(--ink);cursor:pointer}
+.stepper output{font-size:26px;font-weight:700;min-width:24px;text-align:center}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+#err{min-height:20px;margin-top:12px;font-size:14px;text-align:center;font-weight:600}
+#done{position:relative;z-index:2;max-width:380px;margin:0 auto;text-align:center}
+#done .done-skull{width:110px;height:110px;margin:6px auto 14px;cursor:pointer}
+#done h3{font-family:'Jolly Lodger',Georgia,serif;font-weight:400;font-size:48px;line-height:1}
+#done p{font-size:16px;line-height:1.5;margin:10px 0 22px}
+.foot{font-size:11px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-top:40px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .rv,.skull .sk,.hand .hd,.star{opacity:1!important;transform:none!important}
+}
+</style>
+</head>
+<body class="locked">
+
+<!-- Intro -->
+<div id="intro" role="button" tabindex="0" aria-label="Open the invitation">
+  <div class="half top"></div><div class="half bottom"></div>
+  <div class="seal">
+    <span id="sealSkull"></span>
+    <p class="big">Something spooky arrived…</p>
+    <p>Tap to open</p>
+  </div>
+</div>
+
+<div id="sky" aria-hidden="true"></div>
+
+<main class="card">
+  <section class="sheet" id="sheet">
+    <div class="txt">
+      <p class="kicker rv">YOU'RE INVITED TO A</p>
+      <h1 class="title rv" aria-label="Halloween Party"><span class="w" data-split>HALLOWEEN</span><span class="w" data-split>PARTY</span></h1>
+      <p class="date rv">OCTOBER 31ST</p>
+      <p class="time rv">8:00 PM</p>
+      <div class="rv">
+        <a class="addr" href="https://www.google.com/maps/search/?api=1&query=1007+Prospect+Ave+North+Vancouver+BC" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#141210" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>
+          <span>1007 Prospect Ave,<br>North Van<small>Tap for directions</small></span>
+        </a>
+      </div>
+      <div class="rv">
+        <div class="count" id="count">
+          <div><b id="cd-d">0</b><span>days</span></div>
+          <div><b id="cd-h">00</b><span>hrs</span></div>
+          <div><b id="cd-m">00</b><span>min</span></div>
+          <div><b id="cd-s">00</b><span>sec</span></div>
+        </div>
+        <p class="count-note" id="countNote">until the doors creak open</p>
+      </div>
+      <div class="divider rv">
+        <i></i>
+        <svg viewBox="0 0 104 44" aria-hidden="true">
+          <g fill="#141210">
+            <path class="b" d="M8 16c3-4 7-5 11-3l2-3 1 3 1-3 2 3c4-2 8-1 11 3-3 0-5 1-6 4-2-2-5-2-7 1-2-3-5-3-7-1-1-3-3-4-6-4z"/>
+            <path class="b" d="M38 6c4-5 9-6 14-4l2-4 1 4 1-4 2 4c5-2 10-1 14 4-4 0-7 1-8 5-3-2-6-2-9 1-3-3-6-3-9-1-1-4-4-5-8-5z"/>
+            <path class="b" d="M64 20c3-4 7-5 11-3l2-3 1 3 1-3 2 3c4-2 8-1 11 3-3 0-5 1-6 4-2-2-5-2-7 1-2-3-5-3-7-1-1-3-3-4-6-4z"/>
+            <path class="b" d="M34 30c3-4 7-5 11-3l2-3 1 3 1-3 2 3c4-2 8-1 11 3-3 0-5 1-6 4-2-2-5-2-7 1-2-3-5-3-7-1-1-3-3-4-6-4z"/>
+          </g>
+        </svg>
+        <i></i>
+      </div>
+      <p class="must rv">COSTUMES ARE A MUST!</p>
+      <p class="sub rv">COME DRESSED UP</p>
+      <svg class="cheers rv" viewBox="0 0 64 52" aria-hidden="true">
+        <g fill="none" stroke="#141210" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <g class="g1"><path d="M10 12h22L21 26z"/><path d="M21 26v13M15 40h12"/><path d="M14 15h14" stroke-width="1.4"/></g>
+          <g class="g2"><path d="M32 12h22L43 26z"/><path d="M43 26v13M37 40h12"/><path d="M36 15h14" stroke-width="1.4"/></g>
+        </g>
+        <g fill="#141210">
+          <path class="sp" d="M32 0l1 3 3 1-3 1-1 3-1-3-3-1 3-1z"/>
+          <path class="sp" d="M24 3l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>
+          <path class="sp" d="M41 4l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>
+        </g>
+      </svg>
+      <p class="drink rv">BRING YOUR DRINK OF CHOICE</p>
+      <svg class="swoosh rv" viewBox="0 0 110 12" aria-hidden="true"><path d="M3 8C30 3 70 3 107 6" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="actions rv">
+        <a class="btn solid" href="#rsvp">RSVP now</a>
+        <button class="btn" type="button" id="cal">Add to calendar</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="rsvp" id="rsvp">
+    <div class="txt">
+      <h2>RSVP</h2>
+      <p class="lead">Please let us know if you're coming!</p>
+
+      <form id="f" novalidate>
+        <label class="fl"><span>Your name</span>
+          <input type="text" name="nombre" maxlength="80" autocomplete="name" placeholder="e.g. Count Dracula" required>
+        </label>
+        <label class="fl"><span>Your email</span>
+          <input type="email" name="email" maxlength="120" autocomplete="email" inputmode="email" placeholder="you@crypt.com" required>
+        </label>
+
+        <div class="choice" role="radiogroup" aria-label="Will you attend?">
+          <label><input type="radio" name="asiste" value="si"><span class="opt" id="optYes"></span></label>
+          <label><input type="radio" name="asiste" value="no"><span class="opt" id="optNo"></span></label>
+        </div>
+
+        <div id="ifyes">
+          <div class="fl"><span>Bringing anyone? (besides you)</span>
+            <div class="stepper">
+              <button type="button" data-s="-1" aria-label="One less">−</button>
+              <output id="g" aria-live="polite">0</output>
+              <button type="button" data-s="1" aria-label="One more">+</button>
+            </div>
+          </div>
+          <label class="fl"><span>What will you dress up as?</span>
+            <input type="text" name="disfraz" maxlength="80" placeholder="Keep it a secret… or don't">
+          </label>
+        </div>
+
+        <label class="fl"><span>Message for the host (optional)</span>
+          <textarea name="mensaje" rows="2" maxlength="300" placeholder="Boo!"></textarea>
+        </label>
+
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn solid big" type="submit" id="send">Send RSVP</button>
+        <p id="err" role="alert"></p>
+      </form>
+
+      <div id="done" hidden>
+        <div class="done-skull" id="doneSkull"></div>
+        <h3 id="doneTitle"></h3>
+        <p id="doneText"></p>
+        <button class="btn" type="button" id="change">Change my answer</button>
+      </div>
+
+      <p class="foot">See you on the other side</p>
+    </div>
+  </section>
+</main>
+
+<script>
+/* =========================================================
+   CONFIG — pega aquí la URL del Webhook de n8n.
+   Si se deja vacío, el formulario funciona en "modo demo"
+   (simula el envío y no guarda nada).
+   ========================================================= */
+const WEBHOOK_URL = "https://homelab.tail9d4450.ts.net/webhook/rsvp-halloween";
+const PARTY_START = new Date("2026-10-31T20:00:00-07:00"); // 8 PM Vancouver (PDT)
+const STORE_KEY = "rsvp-halloween-2026";
+
+const INK = "#141210", PAPER = "#ece1cd";
+
+/* ---------- Drawings ---------- */
+function skull(fill = INK, hole = PAPER){
+  return `<svg class="sk" viewBox="0 0 100 100" aria-hidden="true">
+    <path class="f" fill="${fill}" d="M50 5C26 5 9 22 9 44c0 13 6 23 15 28v12c0 5 4 9 9 9h34c5 0 9-4 9-9V72c9-5 15-15 15-28C91 22 74 5 50 5z"/>
+    <ellipse class="h" fill="${hole}" cx="33" cy="45" rx="11" ry="12.5"/>
+    <ellipse class="h" fill="${hole}" cx="67" cy="45" rx="11" ry="12.5"/>
+    <path class="h" fill="${hole}" d="M50 58l-6 11h12z"/>
+    <g class="jaw"><rect class="h" fill="${hole}" x="31" y="76" width="38" height="13" rx="3"/>
+    <path stroke="${fill}" stroke-width="2.4" d="M31 82.5h38M40.5 76v13M50 76v13M59.5 76v13"/></g>
+  </svg>`;
+}
+function ghost(){
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><path class="f" fill="${INK}" d="M50 6C29 6 16 22 16 44v46l11-9 12 9 11-9 11 9 12-9 11 9V44C84 22 71 6 50 6z"/><ellipse class="h" fill="${PAPER}" cx="38" cy="42" rx="6" ry="9"/><ellipse class="h" fill="${PAPER}" cx="62" cy="42" rx="6" ry="9"/><ellipse class="h" fill="${PAPER}" cx="50" cy="62" rx="7" ry="5"/></svg>`;
+}
+const FINGERS = [
+  "M104 54Q122 38 138 42Q147 46 142 55",
+  "M110 61Q132 54 148 60Q155 67 148 74",
+  "M110 72Q131 73 144 82Q149 90 140 93",
+  "M103 82Q120 90 127 101Q129 109 121 107",
+  "M84 52Q87 33 101 27Q110 27 108 36"
+];
+function hand(){
+  const f = FINGERS.map(d => `<path d="${d}" stroke="${INK}" stroke-width="12.5"/><path d="${d}" stroke="${PAPER}" stroke-width="8"/>`).join("");
+  return `<svg class="hd" viewBox="0 0 160 120" aria-hidden="true">
+    <g fill="none" stroke-linecap="round" stroke-linejoin="round">${f}</g>
+    <path d="M-10 73L70 57 77 86-10 105z" fill="${PAPER}" stroke="${INK}" stroke-width="2.6" stroke-linejoin="round"/>
+    <path d="M66 55C80 43 104 45 113 58c6 13-2 30-17 34-12 3-24-2-29-9z" fill="${PAPER}" stroke="${INK}" stroke-width="2.6"/>
+    <g fill="none" stroke="${INK}" stroke-width="1.7" stroke-linecap="round">
+      <path d="M18 82l18-4M28 94l22-5M45 76q4 6 2 12"/><path d="M84 63q7 5 4 13M97 68q5 3 3 9M78 78q6 1 9 6"/>
+      <path d="M131 44q2 3 0 6M141 62q2 3 0 6M135 82q2 3 0 6"/>
+    </g>
+  </svg>`;
+}
+const STAR = `<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="${INK}" d="M12 0l1.6 10.4L24 12l-10.4 1.6L12 24l-1.6-10.4L0 12l10.4-1.6z"/></svg>`;
+const BAT = `<svg viewBox="0 0 100 50"><g fill="${INK}"><path class="w" d="M50 22C42 6 22 2 2 14c10 2 13 8 11 15 7-4 14-2 17 5 4-6 11-7 18-2z"/><path class="w" d="M50 22c8-16 28-20 48-8-10 2-13 8-11 15-7-4-14-2-17 5-4-6-11-7-18-2z"/><path d="M44 18l2-8 3 5h2l3-5 2 8c1 6-2 13-6 13s-7-7-6-13z"/></g></svg>`;
+
+/* ---------- Build decorations ---------- */
+function place(parent, cls, html, css, d = 0, r = 0){
+  const el = document.createElement("div");
+  el.className = "deco " + cls;
+  el.innerHTML = html;
+  Object.assign(el.style, css);
+  el.style.setProperty("--d", d);
+  el.style.setProperty("--r", r + "deg");
+  parent.appendChild(el);
+  return el;
+}
+const sheet = document.getElementById("sheet");
+const rsvp = document.getElementById("rsvp");
+
+// skull clusters (like the printed card)
+[[{left:"-14px",top:"-12px",width:"62px",height:"62px"},-12],
+ [{left:"52px",top:"26px",width:"76px",height:"76px"},8],
+ [{left:"6px",top:"74px",width:"50px",height:"50px"},-6],
+ [{right:"-22px",top:"38%",width:"78px",height:"78px"},-10],
+ [{right:"18px",top:"calc(38% + 74px)",width:"52px",height:"52px"},12]
+].forEach(([css,r],i)=>place(sheet,"skull",skull(),css,i,r));
+[[{left:"-16px",bottom:"40px",width:"66px",height:"66px"},14],
+ [{left:"48px",bottom:"-14px",width:"74px",height:"74px"},-8],
+ [{right:"-12px",bottom:"10px",width:"58px",height:"58px"},10]
+].forEach(([css,r],i)=>place(rsvp,"skull",skull(),css,i+5,r));
+
+// hands
+place(sheet,"hand",hand(),{right:"-34px",top:"18px",width:"150px",transform:"rotate(160deg)"},0);
+place(sheet,"hand",hand(),{left:"-58px",top:"41%",width:"150px",transform:"rotate(-14deg)"},1);
+place(sheet,"hand",hand(),{right:"-50px",bottom:"60px",width:"150px",transform:"rotate(-128deg)"},2);
+
+// stars
+[[{left:"62%",top:"20px"}],[{left:"46%",top:"58px"}],[{left:"22px",top:"200px"}],[{right:"26px",top:"300px"}],
+ [{left:"26px",top:"360px"}],[{right:"30px",top:"58%"}],[{left:"20px",top:"74%"}],[{right:"28px",top:"80%"}]
+].forEach(([css],i)=>place(sheet,"star",STAR,css,i));
+[[{left:"24px",top:"40px"}],[{right:"30px",top:"110px"}],[{right:"44%",bottom:"70px"}]
+].forEach(([css],i)=>place(rsvp,"star",STAR,css,i+3));
+
+// split title into wobbly letters
+let li = 0;
+document.querySelectorAll("[data-split]").forEach(w=>{
+  w.innerHTML = [...w.textContent].map(c=>`<span class="ch" style="--i:${li++}">${c}</span>`).join("");
+});
+// reveal order
+document.querySelectorAll(".rv").forEach((el,i)=>el.style.setProperty("--d",i));
+
+document.getElementById("sealSkull").innerHTML = skull(PAPER, INK);
+document.getElementById("optYes").innerHTML = skull() + "I'll be there";
+document.getElementById("optNo").innerHTML = ghost() + "Can't make it";
+document.getElementById("doneSkull").innerHTML = skull();
+
+/* ---------- Skull chatter ---------- */
+function chatter(el){
+  el.classList.remove("chatter"); void el.offsetWidth; el.classList.add("chatter");
+  setTimeout(()=>el.classList.remove("chatter"), 900);
+}
+document.querySelectorAll(".skull").forEach(s=>s.addEventListener("click",()=>chatter(s)));
+document.getElementById("doneSkull").addEventListener("click",e=>chatter(e.currentTarget));
+
+/* ---------- Intro ---------- */
+const intro = document.getElementById("intro");
+function openCard(){
+  if (intro.classList.contains("open")) return;
+  intro.classList.add("open");
+  document.body.classList.remove("locked");
+  document.body.classList.add("opened");
+  setTimeout(()=>{ intro.remove(); }, 1300);
+  setTimeout(()=>{ for(let i=0;i<5;i++) setTimeout(()=>flyBat(),i*140); }, 500);
+  startIdle();
+}
+intro.addEventListener("click", openCard);
+intro.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openCard(); }});
+
+/* ---------- Flying bats ---------- */
+const sky = document.getElementById("sky");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function flyBat(fromX, fromY){
+  if (reduce) return;
+  const b = document.createElement("div");
+  b.className = "fly";
+  b.innerHTML = BAT;
+  const W = innerWidth, H = innerHeight;
+  const ltr = Math.random() > .5;
+  const size = 30 + Math.random()*30;
+  b.style.width = size+"px"; b.style.height = size/2+"px";
+  sky.appendChild(b);
+  let path;
+  if (fromX != null){
+    const a = Math.random()*Math.PI*2, dist = Math.max(W,H);
+    path = [
+      {transform:`translate(${fromX}px,${fromY}px) scale(.2)`},
+      {transform:`translate(${fromX+Math.cos(a)*dist*.35}px,${fromY+Math.sin(a)*dist*.35-60}px) scale(1)`},
+      {transform:`translate(${fromX+Math.cos(a)*dist}px,${fromY+Math.sin(a)*dist-180}px) scale(1.2)`}
+    ];
+  } else {
+    const y = H*(.08 + Math.random()*.6), x0 = ltr ? -80 : W+80, x1 = ltr ? W+80 : -80, f = ltr ? 1 : -1;
+    path = [
+      {transform:`translate(${x0}px,${y}px) scaleX(${f})`},
+      {transform:`translate(${(x0+x1)*.33}px,${y-40}px) scaleX(${f})`},
+      {transform:`translate(${(x0+x1)*.66}px,${y+30}px) scaleX(${f})`},
+      {transform:`translate(${x1}px,${y-20}px) scaleX(${f})`}
+    ];
+  }
+  const anim = b.animate(path,{duration: fromX!=null ? 1600+Math.random()*700 : 6000+Math.random()*4000, easing:"ease-in-out"});
+  anim.onfinish = ()=>b.remove();
+}
+function startIdle(){
+  if (reduce) return;
+  setInterval(()=>{ if(!document.hidden) flyBat(); }, 5200);
+  setInterval(()=>{
+    const all = document.querySelectorAll(".skull");
+    if (all.length && !document.hidden) chatter(all[Math.floor(Math.random()*all.length)]);
+  }, 3800);
+}
+
+/* ---------- Countdown ---------- */
+const pad = n => String(n).padStart(2,"0");
+function tick(){
+  let ms = PARTY_START - Date.now();
+  if (ms <= 0){
+    document.getElementById("count").style.display = "none";
+    document.getElementById("countNote").textContent = "The party has started — get in here!";
+    return;
+  }
+  const s = Math.floor(ms/1000);
+  document.getElementById("cd-d").textContent = Math.floor(s/86400);
+  document.getElementById("cd-h").textContent = pad(Math.floor(s%86400/3600));
+  document.getElementById("cd-m").textContent = pad(Math.floor(s%3600/60));
+  document.getElementById("cd-s").textContent = pad(s%60);
+  setTimeout(tick, 1000 - (Date.now()%1000));
+}
+tick();
+
+/* ---------- Add to calendar (.ics) ---------- */
+document.getElementById("cal").addEventListener("click",()=>{
+  const ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Halloween Party//RSVP//EN","CALSCALE:GREGORIAN","BEGIN:VEVENT",
+    "UID:halloween-party-2026-1007-prospect","DTSTAMP:20261020T000000Z",
+    "DTSTART:20261101T030000Z","DTEND:20261101T080000Z",
+    "SUMMARY:Halloween Party",
+    "LOCATION:1007 Prospect Ave\\, North Vancouver\\, BC",
+    "DESCRIPTION:Costumes are a must! Bring your drink of choice.",
+    "BEGIN:VALARM","TRIGGER:-PT3H","ACTION:DISPLAY","DESCRIPTION:Halloween Party tonight!","END:VALARM",
+    "END:VEVENT","END:VCALENDAR"].join("\r\n");
+  const url = URL.createObjectURL(new Blob([ics],{type:"text/calendar"}));
+  const a = document.createElement("a"); a.href = url; a.download = "halloween-party.ics";
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+});
+
+/* ---------- RSVP form ---------- */
+const form = document.getElementById("f"), ifyes = document.getElementById("ifyes");
+const errEl = document.getElementById("err"), sendBtn = document.getElementById("send");
+const done = document.getElementById("done");
+let guests = 0;
+
+form.addEventListener("change", e=>{
+  if (e.target.name === "asiste") ifyes.classList.toggle("show", e.target.value === "si");
+});
+form.querySelectorAll(".stepper button").forEach(b=>b.addEventListener("click",()=>{
+  guests = Math.min(5, Math.max(0, guests + Number(b.dataset.s)));
+  document.getElementById("g").textContent = guests;
+}));
+
+function store(get, val){
+  try{
+    if (get) return JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+    localStorage.setItem(STORE_KEY, JSON.stringify(val));
+  }catch(_){ return null; }
+}
+function deviceId(){
+  const saved = store(true);
+  if (saved && saved.rsvp_id) return saved.rsvp_id;
+  return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2));
+}
+
+async function send(data){
+  if (!WEBHOOK_URL){ await new Promise(r=>setTimeout(r,900)); return; } // demo mode
+  const ctrl = new AbortController(); const t = setTimeout(()=>ctrl.abort(), 15000);
+  try{
+    const r = await fetch(WEBHOOK_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data),signal:ctrl.signal});
+    if (!r.ok) throw new Error("HTTP "+r.status);
+  } finally { clearTimeout(t); }
+}
+
+function showDone(rec, celebrate){
+  form.hidden = true; done.hidden = false;
+  const first = rec.nombre.split(" ")[0];
+  if (rec.asiste){
+    document.getElementById("doneTitle").textContent = `See you on the 31st, ${first}!`;
+    document.getElementById("doneText").textContent = rec.acompanantes
+      ? `You + ${rec.acompanantes} — we've saved a spot for your crew. Don't forget your costume and your drink of choice.`
+      : "We've saved you a spot. Don't forget your costume and your drink of choice.";
+  } else {
+    document.getElementById("doneTitle").textContent = `We'll miss you, ${first}`;
+    document.getElementById("doneText").textContent = "Thanks for letting us know. If your plans change, you can update your answer anytime.";
+  }
+  if (celebrate){
+    const r = sendBtn.getBoundingClientRect();
+    const cx = r.left + r.width/2, cy = r.top + r.height/2;
+    for (let i=0;i<14;i++) setTimeout(()=>flyBat(cx,cy), i*45);
+    setTimeout(()=>chatter(document.getElementById("doneSkull")), 300);
+  }
+}
+
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  errEl.textContent = "";
+  const fd = new FormData(form);
+  if (fd.get("website")) return; // bot
+  const nombre = (fd.get("nombre")||"").trim();
+  const asiste = fd.get("asiste");
+  if (!nombre){ errEl.textContent = "Tell us your name, mortal."; form.nombre.focus(); return; }
+  const email = (fd.get("email")||"").trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){ errEl.textContent = "We need a valid email to haunt you with reminders."; form.email.focus(); return; }
+  if (!asiste){ errEl.textContent = "Will you be there? Pick one."; return; }
+
+  const rec = {
+    rsvp_id: deviceId(),
+    nombre,
+    email,
+    asiste: asiste === "si",
+    acompanantes: asiste === "si" ? guests : 0,
+    disfraz: asiste === "si" ? (fd.get("disfraz")||"").trim() : "",
+    mensaje: (fd.get("mensaje")||"").trim(),
+    enviado_en: new Date().toISOString()
+  };
+
+  sendBtn.disabled = true; sendBtn.textContent = "Summoning…";
+  try{
+    await send(rec);
+    store(false, rec);
+    showDone(rec, true);
+  }catch(_){
+    errEl.textContent = "The spirits couldn't deliver your RSVP. Please try again in a moment.";
+  }finally{
+    sendBtn.disabled = false; sendBtn.textContent = "Send RSVP";
+  }
+});
+
+document.getElementById("change").addEventListener("click",()=>{
+  const rec = store(true);
+  done.hidden = true; form.hidden = false;
+  if (rec){
+    form.nombre.value = rec.nombre;
+    form.email.value = rec.email || "";
+    const r = form.querySelector(`input[name=asiste][value=${rec.asiste?"si":"no"}]`);
+    if (r){ r.checked = true; ifyes.classList.toggle("show", rec.asiste); }
+    guests = rec.acompanantes || 0; document.getElementById("g").textContent = guests;
+    form.disfraz.value = rec.disfraz || ""; form.mensaje.value = rec.mensaje || "";
+  }
+  form.nombre.focus();
+});
+
+// returning guest → show their answer
+const prev = store(true);
+if (prev && prev.nombre) showDone(prev, false);
+</script>
+</body>
+</html>
