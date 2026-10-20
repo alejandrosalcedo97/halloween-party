@@ -46,16 +46,51 @@ body.opened .rv{opacity:1;transform:none;transition:opacity .9s ease,transform .
 @keyframes flick{0%,90%,100%{opacity:1}91%{opacity:.25}92%{opacity:1}94%{opacity:.45}95.5%{opacity:1}}
 .date{font-size:clamp(26px,8vw,36px);letter-spacing:2px;margin-top:22px}
 .time{font-size:clamp(24px,7vw,32px);letter-spacing:2px;margin-top:4px}
-.addr{display:inline-flex;gap:10px;align-items:flex-start;margin-top:16px;color:var(--ink);text-decoration:none;font-size:18px;line-height:1.35;text-align:left;border-bottom:1.5px dashed transparent;transition:border-color .2s}
-.addr:hover,.addr:focus-visible{border-color:var(--ink)}
-.addr svg{flex:0 0 18px;margin-top:2px}
-.addr small{display:block;font-size:11px;letter-spacing:2px;color:var(--muted);margin-top:4px;text-transform:uppercase}
+/* blood */
+:root{--blood:#8c0a0a;--blood-d:#5a0404}
+.drips{display:block;width:min(300px,78vw);height:46px;margin:-6px auto 0;overflow:visible}
+.drips .d{transform-box:fill-box;transform-origin:top center;transform:scaleY(0)}
+body.opened .drips .d{animation:ooze 2.2s cubic-bezier(.4,0,.2,1) forwards,sway 5s ease-in-out infinite;animation-delay:calc(var(--k) * .35s + 1.3s),calc(var(--k) * .35s + 3.5s)}
+body.opened .drips .drop{animation:fall 3.6s ease-in infinite;animation-delay:calc(var(--k) * 1.1s + 3s)}
+.drips .drop{opacity:0}
+@keyframes ooze{to{transform:scaleY(1)}}
+@keyframes sway{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.12)}}
+@keyframes fall{0%{opacity:0;transform:translateY(0)}8%{opacity:1}70%{opacity:1;transform:translateY(60px)}71%,100%{opacity:0;transform:translateY(60px)}}
 
-.count{display:flex;justify-content:center;gap:8px;margin:24px 0 6px}
-.count div{min-width:60px;padding:10px 4px 8px;border:1.5px solid var(--ink);border-radius:12px;background:rgba(236,225,205,.6)}
-.count b{display:block;font-size:26px;font-weight:700;font-variant-numeric:tabular-nums}
-.count span{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.count-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.place{margin-top:18px}
+.addr-txt{font-size:14px;letter-spacing:1.5px;color:var(--muted);line-height:1.4}
+.btn.map{margin-top:12px;padding:15px 24px;font-size:13.5px;background:var(--blood);border-color:var(--blood);color:#f6ebd8;box-shadow:0 6px 18px -8px rgba(140,10,10,.7)}
+.btn.map svg{width:17px;height:17px}
+
+/* small drip hanging from solid buttons */
+.btn.solid,.btn.map{position:relative;overflow:visible}
+.btn.solid::after,.btn.map::after{content:"";position:absolute;left:32%;top:calc(100% - 2px);width:7px;height:0;background:var(--blood);border-radius:0 0 50% 50% / 0 0 70% 70%;animation:bdrip 4.5s ease-in-out infinite 2s}
+.btn.map::after{left:68%;background:var(--blood-d)}
+@keyframes bdrip{0%,15%{height:0}55%,80%{height:13px}100%{height:0}}
+
+/* cauldron countdown */
+.hg-wrap{margin:26px auto 4px}
+.hg{position:relative;width:280px;height:290px;margin:0 auto}
+.hg>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.hg .bub{transform-box:fill-box;transform-origin:center;opacity:0;animation:bubble 2.6s ease-in infinite;animation-delay:calc(var(--k) * -.55s)}
+@keyframes bubble{0%{opacity:0;transform:translateY(8px) scale(.4)}15%{opacity:1}75%{opacity:.9;transform:translateY(-34px) scale(1)}85%,100%{opacity:0;transform:translateY(-40px) scale(1.5)}}
+.hg .pop{transform-box:fill-box;transform-origin:center bottom;animation:popb 1.8s ease-in-out infinite;animation-delay:calc(var(--k) * -.6s)}
+@keyframes popb{0%,100%{transform:scale(.6)}50%{transform:scale(1.15)}}
+.hg .steam{stroke-dasharray:6 10;opacity:0;animation:steam 4.2s ease-in-out infinite;animation-delay:calc(var(--k) * -1.4s)}
+@keyframes steam{0%{opacity:0;transform:translateY(10px);stroke-dashoffset:0}30%{opacity:.45}100%{opacity:0;transform:translateY(-22px);stroke-dashoffset:-32}}
+.hg .flame{transform-box:fill-box;transform-origin:center bottom;animation:flick2 .5s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -.17s)}
+@keyframes flick2{from{transform:scaleY(.82) skewX(-4deg)}to{transform:scaleY(1.1) skewX(4deg)}}
+.hg .row{position:absolute;left:0;right:0;display:flex;justify-content:center;gap:28px;z-index:1;color:var(--paper)}
+.hg .row.t{top:37%}.hg .row.b{top:58%}
+.hg .row div{min-width:54px;text-align:center}
+.hg b{display:block;font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.hg span{font-size:9.5px;letter-spacing:2px;text-transform:uppercase;opacity:.7}
+.count-note{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:8px}
+
+/* splatter layer */
+#gore{position:fixed;inset:0;pointer-events:none;z-index:45;overflow:hidden}
+#gore i{position:absolute;left:0;top:0;border-radius:50%;background:var(--blood)}
+#gore svg{position:absolute;left:0;top:0}
 
 .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:26px 0 22px}
 .divider i{height:1.5px;width:70px;background:var(--ink)}
@@ -143,7 +178,7 @@ input[type=text]:focus,input[type=email]:focus,textarea:focus{border-bottom-styl
 
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .rv,.skull .sk,.hand .hd,.star{opacity:1!important;transform:none!important}
+  .rv,.skull .sk,.hand .hd,.star,.drips .d{opacity:1!important;transform:none!important}
 }
 </style>
 </head>
@@ -160,28 +195,30 @@ input[type=text]:focus,input[type=email]:focus,textarea:focus{border-bottom-styl
 </div>
 
 <div id="sky" aria-hidden="true"></div>
+<div id="gore" aria-hidden="true"></div>
 
 <main class="card">
   <section class="sheet" id="sheet">
     <div class="txt">
       <p class="kicker rv">YOU'RE INVITED TO A</p>
       <h1 class="title rv" aria-label="Halloween Party"><span class="w" data-split>HALLOWEEN</span><span class="w" data-split>PARTY</span></h1>
+      <svg class="drips" viewBox="0 0 300 46" aria-hidden="true">
+        <path fill="#8c0a0a" d="M58 6C100 1 200 1 244 5c-30 5-90 6-140 5-20 0-36-2-46-4z"/>
+        <path class="d" style="--k:0" fill="#8c0a0a" d="M92 6V22a3.5 3.5 0 0 0 7 0V6z"/>
+        <path class="d" style="--k:1" fill="#7a0808" d="M134.5 7V34a4 4 0 0 0 8 0V7z"/>
+        <path class="d" style="--k:2" fill="#8c0a0a" d="M167 7V16a3 3 0 0 0 6 0V7z"/>
+        <path class="d" style="--k:3" fill="#7a0808" d="M205 6V28a3.5 3.5 0 0 0 7 0V6z"/>
+        <circle class="drop" style="--k:0" fill="#8c0a0a" cx="138.5" cy="41" r="3"/>
+        <circle class="drop" style="--k:1" fill="#8c0a0a" cx="208.5" cy="34" r="2.5"/>
+      </svg>
       <p class="date rv">OCTOBER 31ST</p>
       <p class="time rv">8:00 PM</p>
-      <div class="rv">
-        <a class="addr" href="https://www.google.com/maps/search/?api=1&query=1007+Prospect+Ave+North+Vancouver+BC" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#141210" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>
-          <span>1007 Prospect Ave,<br>North Van<small>Tap for directions</small></span>
+      <div class="place rv">
+        <p class="addr-txt">1007 Prospect Ave, North Van</p>
+        <a class="btn map" href="https://www.google.com/maps/search/?api=1&query=1007+Prospect+Ave+North+Vancouver+BC" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2z"/></svg>
+          Get directions
         </a>
-      </div>
-      <div class="rv">
-        <div class="count" id="count">
-          <div><b id="cd-d">0</b><span>days</span></div>
-          <div><b id="cd-h">00</b><span>hrs</span></div>
-          <div><b id="cd-m">00</b><span>min</span></div>
-          <div><b id="cd-s">00</b><span>sec</span></div>
-        </div>
-        <p class="count-note" id="countNote">until the doors creak open</p>
       </div>
       <div class="divider rv">
         <i></i>
@@ -210,6 +247,27 @@ input[type=text]:focus,input[type=email]:focus,textarea:focus{border-bottom-styl
       </svg>
       <p class="drink rv">BRING YOUR DRINK OF CHOICE</p>
       <svg class="swoosh rv" viewBox="0 0 110 12" aria-hidden="true"><path d="M3 8C30 3 70 3 107 6" fill="none" stroke="#141210" stroke-width="3" stroke-linecap="round"/></svg>
+      <div class="hg-wrap rv">
+        <div class="hg" id="count">
+          <svg viewBox="0 0 280 290" aria-hidden="true">
+            <path class="steam" style="--k:0" d="M104 66c-8-10 8-18 0-28s8-18 0-28" fill="none" stroke="#141210" stroke-width="2.4" stroke-linecap="round"/><path class="steam" style="--k:1" d="M142 66c-8-10 8-18 0-28s8-18 0-28" fill="none" stroke="#141210" stroke-width="2.4" stroke-linecap="round"/><path class="steam" style="--k:2" d="M180 66c-8-10 8-18 0-28s8-18 0-28" fill="none" stroke="#141210" stroke-width="2.4" stroke-linecap="round"/>
+            <g class="flame" style="--k:0"><path fill="#8c0a0a" d="M116 272C101 262 105 252 116 240C127 252 131 262 116 272Z"/><path fill="#d9622b" d="M116 272C109 266 111 264 116 256C121 264 123 266 116 272Z"/></g><g class="flame" style="--k:1"><path fill="#8c0a0a" d="M140 272C125 262 129 238 140 226C151 238 155 262 140 272Z"/><path fill="#d9622b" d="M140 272C133 266 135 250 140 242C145 250 147 266 140 272Z"/></g><g class="flame" style="--k:2"><path fill="#8c0a0a" d="M164 272C149 262 153 250 164 238C175 250 179 262 164 272Z"/><path fill="#d9622b" d="M164 272C157 266 159 262 164 254C169 262 171 266 164 272Z"/></g>
+            <path d="M68 232l-12 26h20zM212 232l12 26h-20z" fill="#141210"/>
+            <path d="M30 94C12 168 48 240 140 242 232 240 268 168 250 94Z" fill="#141210"/>
+            <path d="M50 124C42 164 58 204 86 224" fill="none" stroke="#ece1cd" stroke-opacity=".16" stroke-width="5" stroke-linecap="round"/>
+            <ellipse cx="140" cy="92" rx="120" ry="18" fill="#141210"/>
+            <ellipse cx="140" cy="89" rx="104" ry="11" fill="#8c0a0a"/>
+            <path class="pop" style="--k:0" fill="#a31212" d="M72 88a6 6 0 0 1 12 0z"/><path class="pop" style="--k:1" fill="#a31212" d="M112 88a6 6 0 0 1 12 0z"/><path class="pop" style="--k:2" fill="#a31212" d="M144 88a6 6 0 0 1 12 0z"/><path class="pop" style="--k:3" fill="#a31212" d="M196 88a6 6 0 0 1 12 0z"/>
+            <circle class="bub" style="--k:0" cx="92" cy="84" r="5" fill="none" stroke="#8c0a0a" stroke-width="2"/><circle class="bub" style="--k:1" cx="128" cy="84" r="7" fill="none" stroke="#8c0a0a" stroke-width="2"/><circle class="bub" style="--k:2" cx="160" cy="84" r="4.5" fill="none" stroke="#8c0a0a" stroke-width="2"/><circle class="bub" style="--k:3" cx="190" cy="84" r="6" fill="none" stroke="#8c0a0a" stroke-width="2"/><circle class="bub" style="--k:4" cx="112" cy="84" r="3.5" fill="none" stroke="#8c0a0a" stroke-width="2"/>
+            <path d="M58 98c0 8 1 16-2 22a3.5 3.5 0 0 0 7 0c-3-6-2-14-2-22z" fill="#8c0a0a"/>
+            <path d="M214 99c0 5 1 10-1 14a3 3 0 0 0 6 0c-2-4-1-9-1-14z" fill="#8c0a0a"/>
+            <path d="M96 282L186 266M96 266L186 282" stroke="#141210" stroke-width="9" stroke-linecap="round"/>
+          </svg>
+          <div class="row t"><div><b id="cd-d">0</b><span>days</span></div><div><b id="cd-h">00</b><span>hrs</span></div></div>
+          <div class="row b"><div><b id="cd-m">00</b><span>min</span></div><div><b id="cd-s">00</b><span>sec</span></div></div>
+        </div>
+        <p class="count-note" id="countNote">until the doors creak open</p>
+      </div>
       <div class="actions rv">
         <a class="btn solid" href="#rsvp">RSVP now</a>
         <button class="btn" type="button" id="cal">Add to calendar</button>
@@ -432,6 +490,56 @@ function startIdle(){
   }, 3800);
 }
 
+/* ---------- Blood splatter on every button (just a little) ---------- */
+const gore = document.getElementById("gore");
+function splat(x, y){
+  if (reduce) return;
+  // small splat stain
+  const s = document.createElementNS("http://www.w3.org/2000/svg","svg");
+  const R = 14 + Math.random()*8;
+  s.setAttribute("viewBox","-20 -20 40 40");
+  s.setAttribute("width", R*2); s.setAttribute("height", R*2);
+  let d = "";
+  const n = 9;
+  for (let i=0;i<=n;i++){
+    const a = i/n*Math.PI*2, r = (i%2 ? 6 : 9) + Math.random()*4;
+    d += (i ? "L" : "M") + (Math.cos(a)*r).toFixed(1) + " " + (Math.sin(a)*r).toFixed(1);
+  }
+  s.innerHTML = `<path d="${d}Z" fill="#650505" stroke="#650505" stroke-width="3" stroke-linejoin="round"/>`
+    + Array.from({length:4},()=>{const a=Math.random()*6.28,r=12+Math.random()*6;return `<circle cx="${(Math.cos(a)*r).toFixed(1)}" cy="${(Math.sin(a)*r).toFixed(1)}" r="${(1+Math.random()*1.6).toFixed(1)}" fill="#8c0a0a"/>`}).join("");
+  gore.appendChild(s);
+  const rot = Math.random()*360;
+  s.animate([
+    {transform:`translate(${x-R}px,${y-R}px) rotate(${rot}deg) scale(.2)`,opacity:.9},
+    {transform:`translate(${x-R}px,${y-R}px) rotate(${rot}deg) scale(1)`,opacity:.85,offset:.12},
+    {transform:`translate(${x-R}px,${y-R+4}px) rotate(${rot}deg) scale(1)`,opacity:.7,offset:.6},
+    {transform:`translate(${x-R}px,${y-R+8}px) rotate(${rot}deg) scale(.95)`,opacity:0}
+  ],{duration:1400,easing:"ease-out"}).onfinish = ()=>s.remove();
+  // a few droplets flying out with gravity
+  for (let i=0;i<6;i++){
+    const dr = document.createElement("i");
+    const size = 3 + Math.random()*4;
+    dr.style.width = dr.style.height = size+"px";
+    gore.appendChild(dr);
+    const a = -Math.PI/2 + (Math.random()-.5)*Math.PI*1.3;
+    const v = 30 + Math.random()*45;
+    const dx = Math.cos(a)*v, dy = Math.sin(a)*v;
+    dr.animate([
+      {transform:`translate(${x}px,${y}px) scale(1)`,opacity:1},
+      {transform:`translate(${x+dx*.7}px,${y+dy*.7}px) scale(1)`,opacity:1,offset:.35},
+      {transform:`translate(${x+dx}px,${y+dy+70}px) scale(.6)`,opacity:0}
+    ],{duration:750+Math.random()*350,easing:"cubic-bezier(.2,.6,.5,1)"}).onfinish = ()=>dr.remove();
+  }
+}
+document.addEventListener("pointerdown", e=>{
+  if (e.target.closest("button, .btn, .choice .opt")) splat(e.clientX, e.clientY);
+});
+document.addEventListener("keydown", e=>{
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const t = document.activeElement && document.activeElement.closest && document.activeElement.closest("button, .btn");
+  if (t){ const r = t.getBoundingClientRect(); splat(r.left + r.width/2, r.top + r.height/2); }
+});
+
 /* ---------- Countdown ---------- */
 const pad = n => String(n).padStart(2,"0");
 function tick(){
@@ -442,6 +550,10 @@ function tick(){
     return;
   }
   const s = Math.floor(ms/1000);
+  // blood level in the top bulb drops as the party gets closer (last 11 days)
+  const frac = Math.min(1, ms / (11*86400000));
+  const sandTop = document.getElementById("sandTop");
+  if (sandTop) sandTop.setAttribute("d", `M0 ${(130 - 62*frac).toFixed(1)}H200V130H0Z`);
   document.getElementById("cd-d").textContent = Math.floor(s/86400);
   document.getElementById("cd-h").textContent = pad(Math.floor(s%86400/3600));
   document.getElementById("cd-m").textContent = pad(Math.floor(s%3600/60));
